@@ -1,15 +1,15 @@
 import { Component, h } from '@stencil/core';
 
 @Component({
-  tag: 'designer-component',
-  styleUrl: 'designer-component.css',
+  tag: 'dashboard-component',
+  styleUrl: 'dashboard-component.css',
   shadow: false,
   scoped: true
 })
-export class DesignerComponent {
+export class DashboardComponent {
   render() {
     return <div>
-
+      Dashboard
     </div>;
   }
 }

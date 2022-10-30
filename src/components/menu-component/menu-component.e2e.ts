@@ -13,7 +13,7 @@ describe('menu-component', () => {
     const page = await newE2EPage();
 
     await page.setContent('<menu-component></menu-component>');
-    const element = await page.find('menu-component >>> div');
+    const element = await page.find('div');
     expect(element.textContent).toEqual(``);
   });
 });
