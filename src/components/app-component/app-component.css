@@ -1,5 +1,18 @@
 :host {
-  display: block;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  display: flex;
+}
+
+:host * {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.main-content-container {
+  flex: 1;
+  padding: 1rem;
+}
+
+.main-content-container > fieldset {
+  border: none;
 }

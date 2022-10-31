@@ -5,21 +5,40 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { Website } from "./interfaces";
 export namespace Components {
+    interface AddWebsiteComponent {
+    }
     interface AppComponent {
     }
     interface DashboardComponent {
     }
     interface DesignerComponent {
+        "website": Website;
     }
     interface MenuComponent {
+        "selectedWebsite": string;
     }
+    interface WebsiteWrapperComponent {
+        "route": string;
+        "selectedWebsite": string;
+    }
+}
+export interface AddWebsiteComponentCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLAddWebsiteComponentElement;
 }
 export interface MenuComponentCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMenuComponentElement;
 }
 declare global {
+    interface HTMLAddWebsiteComponentElement extends Components.AddWebsiteComponent, HTMLStencilElement {
+    }
+    var HTMLAddWebsiteComponentElement: {
+        prototype: HTMLAddWebsiteComponentElement;
+        new (): HTMLAddWebsiteComponentElement;
+    };
     interface HTMLAppComponentElement extends Components.AppComponent, HTMLStencilElement {
     }
     var HTMLAppComponentElement: {
@@ -44,38 +63,60 @@ declare global {
         prototype: HTMLMenuComponentElement;
         new (): HTMLMenuComponentElement;
     };
+    interface HTMLWebsiteWrapperComponentElement extends Components.WebsiteWrapperComponent, HTMLStencilElement {
+    }
+    var HTMLWebsiteWrapperComponentElement: {
+        prototype: HTMLWebsiteWrapperComponentElement;
+        new (): HTMLWebsiteWrapperComponentElement;
+    };
     interface HTMLElementTagNameMap {
+        "add-website-component": HTMLAddWebsiteComponentElement;
         "app-component": HTMLAppComponentElement;
         "dashboard-component": HTMLDashboardComponentElement;
         "designer-component": HTMLDesignerComponentElement;
         "menu-component": HTMLMenuComponentElement;
+        "website-wrapper-component": HTMLWebsiteWrapperComponentElement;
     }
 }
 declare namespace LocalJSX {
+    interface AddWebsiteComponent {
+        "onRouteChange"?: (event: AddWebsiteComponentCustomEvent<string>) => void;
+    }
     interface AppComponent {
     }
     interface DashboardComponent {
     }
     interface DesignerComponent {
+        "website"?: Website;
     }
     interface MenuComponent {
         "onRouteChange"?: (event: MenuComponentCustomEvent<string>) => void;
+        "onWebsiteSelectChange"?: (event: MenuComponentCustomEvent<string>) => void;
+        "selectedWebsite"?: string;
+    }
+    interface WebsiteWrapperComponent {
+        "route"?: string;
+        "selectedWebsite"?: string;
     }
     interface IntrinsicElements {
+        "add-website-component": AddWebsiteComponent;
         "app-component": AppComponent;
         "dashboard-component": DashboardComponent;
         "designer-component": DesignerComponent;
         "menu-component": MenuComponent;
+        "website-wrapper-component": WebsiteWrapperComponent;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "add-website-component": LocalJSX.AddWebsiteComponent & JSXBase.HTMLAttributes<HTMLAddWebsiteComponentElement>;
             "app-component": LocalJSX.AppComponent & JSXBase.HTMLAttributes<HTMLAppComponentElement>;
             "dashboard-component": LocalJSX.DashboardComponent & JSXBase.HTMLAttributes<HTMLDashboardComponentElement>;
             "designer-component": LocalJSX.DesignerComponent & JSXBase.HTMLAttributes<HTMLDesignerComponentElement>;
             "menu-component": LocalJSX.MenuComponent & JSXBase.HTMLAttributes<HTMLMenuComponentElement>;
+            "website-wrapper-component": LocalJSX.WebsiteWrapperComponent & JSXBase.HTMLAttributes<HTMLWebsiteWrapperComponentElement>;
         }
     }
 }

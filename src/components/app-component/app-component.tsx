@@ -1,7 +1,4 @@
 import { Component, h, Listen, State } from '@stencil/core';
-import { liveQuery } from "dexie";
-import { db } from '../../database/db';
-import { Website } from '../../interfaces';
 
 @Component({
   tag: 'app-component',
@@ -18,29 +15,27 @@ export class AppComponent {
     this.route = "/" + event.detail;
   }
 
-  /* Used to query websites from database */
-  @State() websites: Website[];
-  
-  websitesObservable = liveQuery (
-    () => db.websites.toArray()
-  );
-  
-  // Subscribe
-  subscription = this.websitesObservable.subscribe({
-    next: result => this.websites = result,
-    error: error => console.error(error)
-  });
+  /* Selected website */
 
-  disconnectedCallback() {
-    if(this.subscription) {
-      this.subscription.unsubscribe();
+  @State() selectedWebsite: string;
+
+  /* Manages the current selected website */
+  
+  @Listen('websiteSelectChange')
+  websiteSelectChangeHandler(event: CustomEvent<string>) {
+    this.selectedWebsite = event.detail;
+    if(this.selectedWebsite) {
+      this.route = "/design-website";
+    }
+    else {
+      this.route = "/";
     }
   }
 
   render() {
     return [
-      <menu-component></menu-component>,
-      this.getMainContent.bind(this)()
+      <menu-component selectedWebsite={this.selectedWebsite}></menu-component>,
+      <div class="main-content-container">{this.getMainContent.bind(this)()}</div>
     ];
   }
 
@@ -52,13 +47,18 @@ export class AppComponent {
       case "/":
         mainContent = <dashboard-component></dashboard-component>;
         break;
-      case "/designer":
-        mainContent = <designer-component></designer-component>;
+      case "/design-website":
+        mainContent = <website-wrapper-component route={this.route} selectedWebsite={this.selectedWebsite}></website-wrapper-component>;
+        break;
+      case "/add-website":
+        mainContent = <add-website-component></add-website-component>;
         break;
       default:
-        mainContent = null;
+        mainContent = <div>An error occurred</div>;
         break;
     }
+
+    
 
     return mainContent;
   }
