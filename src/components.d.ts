@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Website } from "./interfaces";
+import { StyleConfigSettings, Website } from "./interfaces";
 export namespace Components {
     interface AddWebsiteComponent {
     }
@@ -18,6 +18,21 @@ export namespace Components {
     }
     interface MenuComponent {
         "selectedWebsite": string;
+    }
+    interface WebsiteControlsComponent {
+        "disabled": boolean;
+        "saveChangesHandler": ()=> void;
+        "showPreviewSizeToggle": boolean;
+        "togglePreviewSizeClick": (mobileView: boolean) => void;
+        "undoChangesHandler": ()=> void;
+    }
+    interface WebsiteDesignMenuComponent {
+        "styleSettings": StyleConfigSettings;
+        "updateStyleSettings": (newStyle: StyleConfigSettings) => void;
+    }
+    interface WebsitePreviewComponent {
+        "html": string;
+        "mobileView": boolean;
     }
     interface WebsiteWrapperComponent {
         "route": string;
@@ -63,6 +78,24 @@ declare global {
         prototype: HTMLMenuComponentElement;
         new (): HTMLMenuComponentElement;
     };
+    interface HTMLWebsiteControlsComponentElement extends Components.WebsiteControlsComponent, HTMLStencilElement {
+    }
+    var HTMLWebsiteControlsComponentElement: {
+        prototype: HTMLWebsiteControlsComponentElement;
+        new (): HTMLWebsiteControlsComponentElement;
+    };
+    interface HTMLWebsiteDesignMenuComponentElement extends Components.WebsiteDesignMenuComponent, HTMLStencilElement {
+    }
+    var HTMLWebsiteDesignMenuComponentElement: {
+        prototype: HTMLWebsiteDesignMenuComponentElement;
+        new (): HTMLWebsiteDesignMenuComponentElement;
+    };
+    interface HTMLWebsitePreviewComponentElement extends Components.WebsitePreviewComponent, HTMLStencilElement {
+    }
+    var HTMLWebsitePreviewComponentElement: {
+        prototype: HTMLWebsitePreviewComponentElement;
+        new (): HTMLWebsitePreviewComponentElement;
+    };
     interface HTMLWebsiteWrapperComponentElement extends Components.WebsiteWrapperComponent, HTMLStencilElement {
     }
     var HTMLWebsiteWrapperComponentElement: {
@@ -75,6 +108,9 @@ declare global {
         "dashboard-component": HTMLDashboardComponentElement;
         "designer-component": HTMLDesignerComponentElement;
         "menu-component": HTMLMenuComponentElement;
+        "website-controls-component": HTMLWebsiteControlsComponentElement;
+        "website-design-menu-component": HTMLWebsiteDesignMenuComponentElement;
+        "website-preview-component": HTMLWebsitePreviewComponentElement;
         "website-wrapper-component": HTMLWebsiteWrapperComponentElement;
     }
 }
@@ -94,6 +130,21 @@ declare namespace LocalJSX {
         "onWebsiteSelectChange"?: (event: MenuComponentCustomEvent<string>) => void;
         "selectedWebsite"?: string;
     }
+    interface WebsiteControlsComponent {
+        "disabled"?: boolean;
+        "saveChangesHandler"?: ()=> void;
+        "showPreviewSizeToggle"?: boolean;
+        "togglePreviewSizeClick"?: (mobileView: boolean) => void;
+        "undoChangesHandler"?: ()=> void;
+    }
+    interface WebsiteDesignMenuComponent {
+        "styleSettings"?: StyleConfigSettings;
+        "updateStyleSettings"?: (newStyle: StyleConfigSettings) => void;
+    }
+    interface WebsitePreviewComponent {
+        "html"?: string;
+        "mobileView"?: boolean;
+    }
     interface WebsiteWrapperComponent {
         "route"?: string;
         "selectedWebsite"?: string;
@@ -104,6 +155,9 @@ declare namespace LocalJSX {
         "dashboard-component": DashboardComponent;
         "designer-component": DesignerComponent;
         "menu-component": MenuComponent;
+        "website-controls-component": WebsiteControlsComponent;
+        "website-design-menu-component": WebsiteDesignMenuComponent;
+        "website-preview-component": WebsitePreviewComponent;
         "website-wrapper-component": WebsiteWrapperComponent;
     }
 }
@@ -116,6 +170,9 @@ declare module "@stencil/core" {
             "dashboard-component": LocalJSX.DashboardComponent & JSXBase.HTMLAttributes<HTMLDashboardComponentElement>;
             "designer-component": LocalJSX.DesignerComponent & JSXBase.HTMLAttributes<HTMLDesignerComponentElement>;
             "menu-component": LocalJSX.MenuComponent & JSXBase.HTMLAttributes<HTMLMenuComponentElement>;
+            "website-controls-component": LocalJSX.WebsiteControlsComponent & JSXBase.HTMLAttributes<HTMLWebsiteControlsComponentElement>;
+            "website-design-menu-component": LocalJSX.WebsiteDesignMenuComponent & JSXBase.HTMLAttributes<HTMLWebsiteDesignMenuComponentElement>;
+            "website-preview-component": LocalJSX.WebsitePreviewComponent & JSXBase.HTMLAttributes<HTMLWebsitePreviewComponentElement>;
             "website-wrapper-component": LocalJSX.WebsiteWrapperComponent & JSXBase.HTMLAttributes<HTMLWebsiteWrapperComponentElement>;
         }
     }

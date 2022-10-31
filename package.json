@@ -28,7 +28,10 @@
   "dependencies": {
     "@stencil/core": "^2.13.0",
     "chance": "^1.1.9",
-    "dexie": "^3.2.2"
+    "dexie": "^3.2.2",
+    "downloadjs": "^1.4.7",
+    "hex-rgb": "^5.0.0",
+    "lodash.isequal": "^4.5.0"
   },
   "devDependencies": {
     "@types/jest": "^27.0.3",

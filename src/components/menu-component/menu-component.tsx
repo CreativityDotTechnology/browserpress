@@ -49,11 +49,13 @@ export class MenuComponent {
         </div>
         <ul class="hideable">
           <li>
+            <p>Create a new website</p>
             <button onClick={() => this.handleRouteChange.bind(this)("add-website")}>Add Website</button>
           </li>
           {
             this.websites?.length > 0
             ? <li>
+                <p>Work on an existing website</p>
                 <select onInput={(event) => this.handleSelect(event)}>
                 <option selected={this.selectedWebsite === ""} value={""}>Select a website</option>
                   {this.websites.map((website) => {
@@ -66,15 +68,19 @@ export class MenuComponent {
           {
             this.selectedWebsite 
             ? [<li>
+              <p>Customise how your website looks</p>
               <button onClick={() => this.handleRouteChange.bind(this)("design-website")}>Design Website</button>
             </li>,
             <li>
+              <p>Edit, add or delete your website pages</p>
               <button  onClick={() => this.handleRouteChange.bind(this)("manage-website")}>Manage Pages</button>
             </li>,
             <li>
+              <p>Generate website files or save website</p>
               <button  onClick={() => this.handleRouteChange.bind(this)("export-website")}>Export Website</button>
             </li>,
             <li>
+              <p>Permanently delete website</p>
               <button  onClick={() => this.handleRouteChange.bind(this)("delete-website")}>Delete Website</button>
             </li>]
             : null
@@ -89,7 +95,7 @@ export class MenuComponent {
   }
 
   handleRouteChange(route: string) {
-    if(route === "add-website") {
+    if(route === "add-website" || route === "") {
       this.websiteSelectChange.emit("");
     }
     this.routeChange.emit(route);

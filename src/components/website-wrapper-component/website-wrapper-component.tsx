@@ -43,6 +43,24 @@ export class WebsiteWrapperComponent {
     }
   }
 
+  @Watch('route')
+  onRouteChanged(newValue: string, oldValue: string) {
+    if(newValue !== oldValue) {
+      if(this.subscription) {
+        this.subscription.unsubscribe();
+      }
+
+      this.websitesObservable = liveQuery (
+        () => db.websites.get(this.selectedWebsite)
+      );
+    
+      this.subscription = this.websitesObservable.subscribe({
+        next: this.nextHandler.bind(this),
+        error: error => console.error(error)
+      });
+    }
+  }
+
   nextHandler(result) {
     this.website = result;
   }
