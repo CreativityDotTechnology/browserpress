@@ -6,6 +6,7 @@
   box-sizing: border-box;
   padding: 1rem;
   border: 1px solid #e5e5e5;
+  justify-content: center;
 }
 
 iframe {

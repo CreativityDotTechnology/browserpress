@@ -42,12 +42,31 @@ export class DesignerComponent {
     
     return <div>
         <h2>Designer</h2>
-        <website-controls-component showPreviewSizeToggle={true}></website-controls-component>
+        <website-controls-component 
+          showPreviewSizeToggle={true} 
+          saveChangesHandler={this.handleSaveChanges.bind(this)}
+          undoChangesHandler={this.handleUndoChanges.bind(this)}
+          togglePreviewSizeClick={this.previewToggleHandler.bind(this)}
+          disabled={true}>
+        </website-controls-component>
         <div class="website-design-content">
           <website-design-menu-component styleSettings={this.style} updateStyleSettings={this.handleStyleUpdate.bind(this)}></website-design-menu-component>
-          <website-preview-component html={iframeSrcDoc}></website-preview-component>
+          <website-preview-component html={iframeSrcDoc} mobileView={this.mobileView}></website-preview-component>
         </div>
     </div>;
+  }
+
+  handleSaveChanges() {
+    console.log("Saved");
+  }
+
+  handleUndoChanges() {
+    console.log("Undone");
+  }
+
+  previewToggleHandler(mobileView: boolean) {
+    console.log("clicked mobile handler")
+    this.mobileView = mobileView;
   }
 
   handleStyleUpdate(newStyle: StyleConfigSettings) {

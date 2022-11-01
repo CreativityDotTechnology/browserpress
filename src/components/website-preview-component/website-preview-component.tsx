@@ -11,7 +11,7 @@ export class WebsitePreviewComponent {
   @Prop() html: string;
 
   render() {
-    return <iframe class={this.mobileView ? "preview mobile" : "preview"} srcDoc={this.html}></iframe>
+    return <iframe class={this.mobileView ? "mobile" : ""} srcDoc={this.html}></iframe>
   }
 
 

@@ -1,5 +1,7 @@
 import { Component, h, Prop, State } from '@stencil/core';
-import { StyleConfigSettings } from '../../interfaces';
+import { StyleConfigSettings, Font } from '../../interfaces';
+import {fonts} from '../../constants/fonts';
+
 
 @Component({
   tag: 'website-design-menu-component',
@@ -22,6 +24,7 @@ export class WebsiteDesignMenuComponent {
             <option value="" selected={this.selectedDesignSetting === ""}>Choose what to design</option>
             <option value="branding" selected={this.selectedDesignSetting === "branding"}>Branding</option>
             <option value="header" selected={this.selectedDesignSetting === "header"}>Header</option>
+            <option value="footer" selected={this.selectedDesignSetting === "footer"}>Footer</option>
             <option value="menu" selected={this.selectedDesignSetting === "menu"}>Menu</option>
             <option value="font" selected={this.selectedDesignSetting === "font"}>Font</option>
             <option value="background" selected={this.selectedDesignSetting === "background"}>Page background</option>
@@ -38,7 +41,6 @@ export class WebsiteDesignMenuComponent {
   }
 
   renderMenuContent() {
-    console.log(this.styleSettings.logoImage)
     switch(this.selectedDesignSetting) {
        case "branding":
           return <div>
@@ -58,6 +60,26 @@ export class WebsiteDesignMenuComponent {
               <label htmlFor="copyright-name">Copyright name</label>
               <input id="copyright-name" type="text" value={this.styleSettings.copyrightName} onInput={(event) => this.handlePropertyChange.bind(this)(event, "copyrightName")}></input>
           </div>
+      case "font":
+        return <div>
+              {
+                  !this.styleSettings.customFont
+                  ? <div>
+                      <label htmlFor="font-family">Standard font</label>
+                      <select id="font-family" onInput={(event) => this.handlePropertyChange.bind(this)(event, "fontFamily")}>
+                          {fonts.map((font: Font) => <option key={font.name} selected={this.styleSettings.fontFamily === font.value} value={font.value}>{font.name}</option>)}
+                      </select>
+                  </div>
+                  : null
+              }
+              <label htmlFor="font-family">Upload Custom font (.ttf, .woff2)</label>
+              <input id="header-background" type="file" accept=".ttf, .woff2" onChange={(event) => this.handleFileUploadChange.bind(this)(event, "customFont")} value={""}></input>
+              {
+                  this.styleSettings.customFont
+                  ? <div><button onClick={(event) => this.handleDeleteFileClick.bind(this)(event, "customFont")}>Remove font</button></div>
+                  : null
+              }
+        </div>
       case "header":
         return <div>
               <label htmlFor="header-background">Header background color</label>
@@ -70,6 +92,26 @@ export class WebsiteDesignMenuComponent {
               <input id="header-title-font-size" type="range" min="1" max="2"  step="0.1" value={this.styleSettings.headerTitleFontSize} onInput={(event) => this.handlePropertyChange.bind(this)(event, "headerTitleFontSize")}></input>
               <label htmlFor="header-title-font-weight">Header font weight</label>
               <input id="header-title-font-weight" type="range" min="100" max="700"  step="100" value={this.styleSettings.headerTitleFontWeight} onInput={(event) => this.handlePropertyChange.bind(this)(event, "headerTitleFontWeight")}></input>
+        </div>
+      case "footer":
+        return <div>
+              <label htmlFor="footer-background">Background color</label>
+              <input id="footer-background"type="color"  value={this.styleSettings.footerBackgroundColor} onInput={(event) => this.handlePropertyChange.bind(this)(event, "footerBackgroundColor")}></input>
+              <label htmlFor="footer-font-color">Font color</label>
+              <input id="footer-font-color" type="color"  value={this.styleSettings.footerFontColor} onInput={(event) => this.handlePropertyChange.bind(this)(event, "footerFontColor")}></input>
+              <label htmlFor="footer-border-enabled">Border color</label>
+              <select id="footer-border-enabled" onInput={(event) => this.handlePropertyChange.bind(this)(event, "footerBorderEnabled")}>
+                  <option selected={this.styleSettings.footerBorderEnabled === "true"} value="true">Show border</option>
+                  <option selected={this.styleSettings.footerBorderEnabled === "false"} value="false">Hide border</option>
+              </select>
+              {
+                  this.styleSettings.footerBorderEnabled === "true"
+                  ? <div>
+                      <label htmlFor="footer-border-color">Footer border color</label>
+                      <input id="footer-border-color" type="color"  value={this.styleSettings.footerBorderColor} onInput={(event) => this.handlePropertyChange.bind(this)(event, "footerBorderColor")}></input>
+                  </div>
+                  : null
+              }
         </div>
       case "menu":
         return <div>
@@ -88,8 +130,6 @@ export class WebsiteDesignMenuComponent {
                             </div>
                             : null
                         }
-                        <label htmlFor="open-menu">Open menu label</label>
-                        <input id="open-menu" type="text" value={this.styleSettings.openMenuLabel} onInput={(event) => this.handlePropertyChange.bind(this)(event, "openMenuLabel")}></input>
                         <label htmlFor="close-menu">Close menu label</label>
                         <input id="close-menu" type="text" value={this.styleSettings.closeMenuLabel} onInput={(event) => this.handlePropertyChange.bind(this)(event, "closeMenuLabel")}></input>
         </div>
@@ -148,12 +188,14 @@ export class WebsiteDesignMenuComponent {
   }
 
   handleFileUploadChange(event, propertyKey) {
-    console.log("Uploading file")
     
     const fileReader = new FileReader();
+    const input = event.currentTarget;
+
     fileReader.onload = () => {
         const result = fileReader.result;
         this.updateStyleSettings({...this.styleSettings, [propertyKey]: result});
+        input.value= null;
     }
 
     const files = event.currentTarget.files;

@@ -19,7 +19,6 @@ export function renderCss(settings: StyleConfigSettings) {
             }
 
             header {
-                min-height: 80px;
                 display: flex;
                 width: 100%;
                 flex-direction: row;
@@ -98,6 +97,7 @@ export function renderCss(settings: StyleConfigSettings) {
             }
 
             .menu-container ul {
+                min-height: 80px;
                 display: flex;
                 flex: 1;
                 justify-content: flex-end;
@@ -471,7 +471,8 @@ export function renderCss(settings: StyleConfigSettings) {
 
                 .menu-container {
                     flex-direction: column;
-                    justify-content: flex-start;
+                    justify-content: center;
+                    width: 100%;
                 }
 
                 .menu-container ul {
@@ -481,7 +482,7 @@ export function renderCss(settings: StyleConfigSettings) {
                 }
 
                 .menu-container ul li {
-                    width: 100%;
+                    min-width: 100px;
                     height: 2rem;
                 }
 
