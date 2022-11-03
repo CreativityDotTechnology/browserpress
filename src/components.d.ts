@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { StyleConfigSettings, Website } from "./interfaces";
+import { Page, PageElement, StyleConfigSettings, Website } from "./interfaces";
 export namespace Components {
     interface AddWebsiteComponent {
     }
@@ -16,8 +16,20 @@ export namespace Components {
     interface DesignerComponent {
         "website": Website;
     }
+    interface EditorComponent {
+        "website": Website;
+    }
     interface MenuComponent {
         "selectedWebsite": string;
+    }
+    interface PageContentManagementComponent {
+        "page": Page;
+        "position": number;
+        "updatePage": (newElements: PageElement[]) => void;
+    }
+    interface WebsiteContentManagementComponent {
+        "pages": Page[];
+        "updatePages": (newPages: Page[]) => void;
     }
     interface WebsiteControlsComponent {
         "disabled": boolean;
@@ -72,11 +84,29 @@ declare global {
         prototype: HTMLDesignerComponentElement;
         new (): HTMLDesignerComponentElement;
     };
+    interface HTMLEditorComponentElement extends Components.EditorComponent, HTMLStencilElement {
+    }
+    var HTMLEditorComponentElement: {
+        prototype: HTMLEditorComponentElement;
+        new (): HTMLEditorComponentElement;
+    };
     interface HTMLMenuComponentElement extends Components.MenuComponent, HTMLStencilElement {
     }
     var HTMLMenuComponentElement: {
         prototype: HTMLMenuComponentElement;
         new (): HTMLMenuComponentElement;
+    };
+    interface HTMLPageContentManagementComponentElement extends Components.PageContentManagementComponent, HTMLStencilElement {
+    }
+    var HTMLPageContentManagementComponentElement: {
+        prototype: HTMLPageContentManagementComponentElement;
+        new (): HTMLPageContentManagementComponentElement;
+    };
+    interface HTMLWebsiteContentManagementComponentElement extends Components.WebsiteContentManagementComponent, HTMLStencilElement {
+    }
+    var HTMLWebsiteContentManagementComponentElement: {
+        prototype: HTMLWebsiteContentManagementComponentElement;
+        new (): HTMLWebsiteContentManagementComponentElement;
     };
     interface HTMLWebsiteControlsComponentElement extends Components.WebsiteControlsComponent, HTMLStencilElement {
     }
@@ -107,7 +137,10 @@ declare global {
         "app-component": HTMLAppComponentElement;
         "dashboard-component": HTMLDashboardComponentElement;
         "designer-component": HTMLDesignerComponentElement;
+        "editor-component": HTMLEditorComponentElement;
         "menu-component": HTMLMenuComponentElement;
+        "page-content-management-component": HTMLPageContentManagementComponentElement;
+        "website-content-management-component": HTMLWebsiteContentManagementComponentElement;
         "website-controls-component": HTMLWebsiteControlsComponentElement;
         "website-design-menu-component": HTMLWebsiteDesignMenuComponentElement;
         "website-preview-component": HTMLWebsitePreviewComponentElement;
@@ -125,10 +158,22 @@ declare namespace LocalJSX {
     interface DesignerComponent {
         "website"?: Website;
     }
+    interface EditorComponent {
+        "website"?: Website;
+    }
     interface MenuComponent {
         "onRouteChange"?: (event: MenuComponentCustomEvent<string>) => void;
         "onWebsiteSelectChange"?: (event: MenuComponentCustomEvent<string>) => void;
         "selectedWebsite"?: string;
+    }
+    interface PageContentManagementComponent {
+        "page"?: Page;
+        "position"?: number;
+        "updatePage"?: (newElements: PageElement[]) => void;
+    }
+    interface WebsiteContentManagementComponent {
+        "pages"?: Page[];
+        "updatePages"?: (newPages: Page[]) => void;
     }
     interface WebsiteControlsComponent {
         "disabled"?: boolean;
@@ -154,7 +199,10 @@ declare namespace LocalJSX {
         "app-component": AppComponent;
         "dashboard-component": DashboardComponent;
         "designer-component": DesignerComponent;
+        "editor-component": EditorComponent;
         "menu-component": MenuComponent;
+        "page-content-management-component": PageContentManagementComponent;
+        "website-content-management-component": WebsiteContentManagementComponent;
         "website-controls-component": WebsiteControlsComponent;
         "website-design-menu-component": WebsiteDesignMenuComponent;
         "website-preview-component": WebsitePreviewComponent;
@@ -169,7 +217,10 @@ declare module "@stencil/core" {
             "app-component": LocalJSX.AppComponent & JSXBase.HTMLAttributes<HTMLAppComponentElement>;
             "dashboard-component": LocalJSX.DashboardComponent & JSXBase.HTMLAttributes<HTMLDashboardComponentElement>;
             "designer-component": LocalJSX.DesignerComponent & JSXBase.HTMLAttributes<HTMLDesignerComponentElement>;
+            "editor-component": LocalJSX.EditorComponent & JSXBase.HTMLAttributes<HTMLEditorComponentElement>;
             "menu-component": LocalJSX.MenuComponent & JSXBase.HTMLAttributes<HTMLMenuComponentElement>;
+            "page-content-management-component": LocalJSX.PageContentManagementComponent & JSXBase.HTMLAttributes<HTMLPageContentManagementComponentElement>;
+            "website-content-management-component": LocalJSX.WebsiteContentManagementComponent & JSXBase.HTMLAttributes<HTMLWebsiteContentManagementComponentElement>;
             "website-controls-component": LocalJSX.WebsiteControlsComponent & JSXBase.HTMLAttributes<HTMLWebsiteControlsComponentElement>;
             "website-design-menu-component": LocalJSX.WebsiteDesignMenuComponent & JSXBase.HTMLAttributes<HTMLWebsiteDesignMenuComponentElement>;
             "website-preview-component": LocalJSX.WebsitePreviewComponent & JSXBase.HTMLAttributes<HTMLWebsitePreviewComponentElement>;

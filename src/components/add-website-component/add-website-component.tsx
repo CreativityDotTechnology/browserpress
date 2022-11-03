@@ -18,12 +18,14 @@ export class DashboardComponent {
     return <div>
             <h2>Add a new website</h2>
             <form>
-              <fieldset>
+              <div class="data-entry-container">
                 <label htmlFor="website-name">Website name</label>
                 <input type="text" placeholder="Enter a name" value={this.websiteName} id="website-name" onInput={this.handleWebsiteNameChange.bind(this)}></input>
-              </fieldset>
-              <button onClick={this.handleCancelClick.bind(this)}>Cancel</button>
-              <button disabled={this.websiteName.length === 0} onClick={this.handleAddWebsiteClick.bind(this)}>Add website</button>
+              <div class="button-container">
+                <button disabled={this.websiteName.length === 0} onClick={this.handleAddWebsiteClick.bind(this)}>Add website</button>
+                <button class="cancel" onClick={this.handleCancelClick.bind(this)}>Cancel</button>
+              </div>
+              </div>
           </form>
       </div>
   }

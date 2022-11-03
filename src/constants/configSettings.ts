@@ -6,6 +6,8 @@ export const initialSettings: StyleConfigSettings = {
     displayName: "",
     copyrightName: "",
     logoImage: null,
+    faviconImage: null,
+    browserTabText: ",",
     // Font
     customFont: null,
     fontFamily: "Arial",
@@ -28,6 +30,7 @@ export const initialSettings: StyleConfigSettings = {
     backgroundGradientBottom: "#F1F1F1",
     backgroundImage: null,
     backgroundColor: "#F1F1F1",
+    backgroundBlur: "0",
     // Main
     pageContentBackgroundColor: "#FFFFFF",
     pageContentOpacity: "100",

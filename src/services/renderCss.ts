@@ -1,5 +1,6 @@
 import { StyleConfigSettings } from "../interfaces";
 import hexRgb from 'hex-rgb';
+import escape from 'escape-html';
 
 export function renderCss(settings: StyleConfigSettings) {
     return `
@@ -7,8 +8,9 @@ export function renderCss(settings: StyleConfigSettings) {
             body {
                 margin: 0;
                 padding: 0;
-                font-family: ${settings.customFont ? "Custom Font" : settings.fontFamily};
+                font-family: ${settings.customFont ? "Custom Font" : escape(settings.fontFamily)};
                 background: ${getBackground()};
+                backdrop-filter: ${settings.backgroundType === "BACKGROUND_IMAGE" ? "blur(" + escape(settings.backgroundBlur) +"px)" : "none"};
                 background-size: cover;
                 background-attachment: fixed;
                 background-position: center;
@@ -21,6 +23,7 @@ export function renderCss(settings: StyleConfigSettings) {
             header {
                 display: flex;
                 width: 100%;
+                box-sizing: border-box;
                 flex-direction: row;
                 flex-wrap: wrap;
                 position: sticky;
@@ -33,16 +36,14 @@ export function renderCss(settings: StyleConfigSettings) {
             }
 
             .site-name-container {
-                background-color: ${hexRgb(settings.headerBackgroundColor, {
+                background-color: ${escape(hexRgb(settings.headerBackgroundColor, {
                     alpha: (parseInt(settings.headerOpacity) / 100), 
                     format: "css"
-                })};
-                /*min-height: 40px;*/
+                }))};
                 display: flex;
                 flex-direction: row;
                 flex-wrap: wrap;
                 align-items: center;
-                min-width: 300px;
                 justify-content: flex-start;
                 padding-left: 2rem;
                 padding-right: 2rem;
@@ -85,6 +86,7 @@ export function renderCss(settings: StyleConfigSettings) {
                     })
                 };
                 flex: 3;
+                z-index: 10;
                 min-width: 300px;
                 display: flex;
                 flex-direction: row;
@@ -124,12 +126,15 @@ export function renderCss(settings: StyleConfigSettings) {
             .menu-container ul li:hover {
                 font-weight: 700;
                 cursor: pointer;
+                text-decoration: underline;
             }
 
 
             .mobile-menu-close {
+                margin-top: 1rem;
                 display: none !important;
                 font-size: 0.9rem;
+                fill: ${settings.enableSeparateMenuBackgroundColor === "true" ? settings.menuFontColor : settings.headerFontColor};
             }
 
             .mobile-menu-close b { 
@@ -194,11 +199,8 @@ export function renderCss(settings: StyleConfigSettings) {
                 background-color: ${settings.footerBackgroundColor};
                 min-height: 35px;
                 display: flex;
-                flex-direction: row;
+                flex-direction: column;
                 justify-content: flex-start;
-                align-items: center;
-                flex-wrap: wrap;
-                color: ${settings.footerFontColor};
                 border-top: 1px solid;
                 border-color: ${settings.footerBorderEnabled === "true"
                     ? settings.footerBorderColor 
@@ -207,6 +209,30 @@ export function renderCss(settings: StyleConfigSettings) {
                         format: "css"
                     })
                 }
+            }
+
+            .current-year-container {
+                min-width: 250px;
+                flex: 1;
+                display: flex;
+                justify-content: flex-start;
+                color: ${settings.footerFontColor};
+            }
+
+            .built-with-container {
+                margin-top: 1rem;
+                min-width: 250px;
+                flex: 1;
+                display: flex;
+                justify-content: center;
+                color: ${settings.footerFontColor};
+                opacity: 0.5;
+                font-size: 0.8rem;
+            }
+
+            .built-with-container a {
+                font-size: 0.8rem;
+                color: ${settings.footerFontColor};
             }
 
             .item-grid-container {
@@ -377,42 +403,6 @@ export function renderCss(settings: StyleConfigSettings) {
                 list-style-type: none;
             }
 
-            @media (min-width: 1750px) {
-
-                .page-content {
-                    margin-left: ${parseInt(settings.itemGridMarginSides) * 3}%;
-                    margin-right: ${parseInt(settings.itemGridMarginSides) * 3}%;
-                }
-
-                .item-grid-container {
-                    margin-left: ${parseInt(settings.itemGridMarginSides) * 3}%;
-                    margin-right: ${parseInt(settings.itemGridMarginSides) * 3}%;
-                }
-
-                .articles-widget {
-                    margin-left: ${parseInt(settings.itemGridMarginSides) * 3}%;
-                    margin-right: ${parseInt(settings.itemGridMarginSides) * 3}%;
-                }
-            }
-
-            @media (min-width: 1250px) {
-
-                .page-content {
-                    margin-left: ${parseInt(settings.itemGridMarginSides) * 2}%;
-                    margin-right: ${parseInt(settings.itemGridMarginSides) * 2}%;
-                }
-
-                .item-grid-container {
-                    margin-left: ${parseInt(settings.itemGridMarginSides) * 2}%;
-                    margin-right: ${parseInt(settings.itemGridMarginSides) * 2}%;
-                }
-
-                .articles-widget {
-                    margin-left: ${parseInt(settings.itemGridMarginSides) * 2}%;
-                    margin-right: ${parseInt(settings.itemGridMarginSides) * 2}%;
-                }
-            }
-
             @media (max-width: 900px) { 
 
                 header {
@@ -430,6 +420,16 @@ export function renderCss(settings: StyleConfigSettings) {
             }
 
             @media (max-width: 750px) {
+
+                .page-content {
+                    margin-left: ${parseInt(settings.pageContentMarginSides)/1.5}%;
+                    margin-right: ${parseInt(settings.pageContentMarginSides)/1.5}%;
+                    margin-top: ${parseInt(settings.pageContentMarginTop)/1.5}rem;
+                    margin-bottom: ${parseInt(settings.pageContentMarginBottom)/1.5}rem;
+                    padding-left: ${parseInt(settings.pageContentPadding)/1.5}rem;
+                    padding-right: ${parseInt(settings.pageContentPadding)/1.5}rem;
+                }
+
                 .articles-list article {
                     flex-direction: column;
                 }
@@ -460,10 +460,6 @@ export function renderCss(settings: StyleConfigSettings) {
                     transform: scale(0.9);
                 }
 
-                .menu-container ul li:not(:last-child) {
-                    border-bottom: 1px solid ${settings.enableSeparateMenuBackgroundColor === "true" ? settings.menuFontColor : settings.headerFontColor};
-                }
-
                 .mobile-menu {
                     display: flex;
                     align-items: center;
@@ -484,6 +480,10 @@ export function renderCss(settings: StyleConfigSettings) {
                 .menu-container ul li {
                     min-width: 100px;
                     height: 2rem;
+                }
+
+                .mobile-menu:focus svg {
+                    display: none;
                 }
 
                 .mobile-menu:focus + ul {
@@ -530,6 +530,10 @@ export function renderCss(settings: StyleConfigSettings) {
 
                 footer {
                     font-size: 0.9rem;
+                }
+
+                .built-with-container {
+                    justify-content: center;
                 }
                 
             }

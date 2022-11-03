@@ -101,6 +101,8 @@ export interface StyleConfigSettings {
         displayName: string;
         copyrightName: string;
         logoImage: null | string | ArrayBuffer;
+        faviconImage: null | string | ArrayBuffer;
+        browserTabText: string;
         // Font
         customFont: null | string | ArrayBuffer;
         fontFamily: string;
@@ -123,6 +125,7 @@ export interface StyleConfigSettings {
         backgroundGradientBottom: string;
         backgroundImage: null  | string | ArrayBuffer,
         backgroundColor: string;
+        backgroundBlur: string;
         // Main
         pageContentBackgroundColor: string;
         pageContentOpacity: string;

@@ -26,7 +26,7 @@ export class DashboardComponent {
         <li>Now you can upload your website to a hosting provider of your choice</li>
     </ul>
     <h2>Who created this app?</h2>
-    <p>BrowserPress is an open source application created by <a href="https://www.linkedin.com/in/tomswales/" target="_blank">Tom Schneider-Swales</a> to build my web development skills and create something useful and free.</p>
+    <p>BrowserPress is an open source application created by <a href="https://www.linkedin.com/in/tomswales/" target="_blank">Tom Schneider-Swales</a>.</p>
     <h2>License</h2>
     <p>This application is available on Github with an MIT license: <a href="github.com/tomswales" target="_blank">Find it on Github</a></p>
 </main>;

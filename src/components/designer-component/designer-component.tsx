@@ -1,9 +1,11 @@
 import { Component, h, Prop, State, Watch } from '@stencil/core';
-import { StyleConfigSettings, Website } from '../../interfaces';
+import { StateUpdateType, StyleConfigSettings, Website } from '../../interfaces';
 import {initialSettings} from '../../constants/configSettings';
 import { renderHTMLWrapper } from '../../services/renderHTMLWrapper';
 import { renderDummyContent } from '../../services/renderDummyContent';
 import { renderDummyMenuContent } from '../../services/renderDummyMenuContent';
+import isEqual from 'lodash.isequal';
+import {dbUpdate} from '../../database/dbUpdate';
 
 @Component({
   tag: 'designer-component',
@@ -13,21 +15,27 @@ import { renderDummyMenuContent } from '../../services/renderDummyMenuContent';
 })
 export class DesignerComponent {
 
+  @Prop() website: Website;
+  @State() initial = initialSettings;
   @State() style: StyleConfigSettings = initialSettings;
   @State() mobileView: boolean = false;
 
-  @Prop() website: Website;
-
   @Watch('website')
-  onSelectedWebsiteChanged(newValue: Website, oldValue: Website) {
-    console.log("Website changed")
-    if(newValue.id !== oldValue.id) {
-        if(newValue.styleConfig) {
-          this.style = newValue.styleConfig
-        }
-        else {
-          this.style = initialSettings;
-        }
+  onSelectedWebsiteChanged(newValue: Website, _oldValue: Website) {
+    if(newValue.styleConfig) {
+      this.initial = newValue.styleConfig;
+      this.style = newValue.styleConfig;
+    }
+    else {
+      this.initial = initialSettings;
+      this.style = initialSettings;
+    }
+  }
+
+  componentWillLoad() {
+    if(this.website && this.website.styleConfig) {
+      this.initial = this.website.styleConfig;
+      this.style = this.website.styleConfig;
     }
   }
 
@@ -47,7 +55,7 @@ export class DesignerComponent {
           saveChangesHandler={this.handleSaveChanges.bind(this)}
           undoChangesHandler={this.handleUndoChanges.bind(this)}
           togglePreviewSizeClick={this.previewToggleHandler.bind(this)}
-          disabled={true}>
+          disabled={!this.hasChanged()}>
         </website-controls-component>
         <div class="website-design-content">
           <website-design-menu-component styleSettings={this.style} updateStyleSettings={this.handleStyleUpdate.bind(this)}></website-design-menu-component>
@@ -57,20 +65,33 @@ export class DesignerComponent {
   }
 
   handleSaveChanges() {
-    console.log("Saved");
+    this.handleSaveChangesClick();
   }
 
   handleUndoChanges() {
-    console.log("Undone");
+    this.style = this.initial;
   }
 
   previewToggleHandler(mobileView: boolean) {
-    console.log("clicked mobile handler")
     this.mobileView = mobileView;
   }
 
   handleStyleUpdate(newStyle: StyleConfigSettings) {
     this.style = newStyle;
+  }
+
+  hasChanged() {
+      return !isEqual(this.initial, this.style);
+  }
+
+  handleSaveChangesClick() {
+    dbUpdate({
+          type: StateUpdateType.SAVE_STYLE,
+          payload: {
+              id: this.website.id,
+              styleConfig: this.style
+          }
+      });
   }
 
 }

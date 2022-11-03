@@ -50,6 +50,9 @@ export class AppComponent {
       case "/design-website":
         mainContent = <website-wrapper-component route={this.route} selectedWebsite={this.selectedWebsite}></website-wrapper-component>;
         break;
+      case "/manage-website":
+        mainContent = <website-wrapper-component route={this.route} selectedWebsite={this.selectedWebsite}></website-wrapper-component>;
+        break;
       case "/add-website":
         mainContent = <add-website-component></add-website-component>;
         break;

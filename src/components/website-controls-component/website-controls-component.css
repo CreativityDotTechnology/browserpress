@@ -20,9 +20,26 @@ button {
   margin: 0.5rem;
 }
 
+button.cancel {
+  background-color: white;
+  border: 1px solid rgb(255, 75, 75);
+  color: rgb(255, 75, 75);
+}
+
+button:disabled {
+  color: gray;
+  border: 1px solid gray;
+  background-color: white;
+}
+
 button:hover {
   cursor: pointer;
   background-color: white;
   color: black;
+}
+
+button:disabled:hover {
+  cursor: not-allowed;
+  color: gray;
 }
 

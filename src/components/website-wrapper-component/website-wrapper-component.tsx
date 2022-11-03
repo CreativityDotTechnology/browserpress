@@ -78,6 +78,9 @@ export class WebsiteWrapperComponent {
         case "/design-website":
           websiteContent = <designer-component website={this.website}></designer-component>;
           break;
+        case "/manage-website":
+          websiteContent = <editor-component website={this.website}></editor-component>;
+          break;
         default:
           websiteContent = <div>An error occurred</div>;
           break;

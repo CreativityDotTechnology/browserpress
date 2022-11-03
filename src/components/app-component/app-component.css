@@ -11,6 +11,7 @@
 .main-content-container {
   flex: 1;
   padding: 1rem;
+  box-sizing: border-box;
 }
 
 .main-content-container > fieldset {

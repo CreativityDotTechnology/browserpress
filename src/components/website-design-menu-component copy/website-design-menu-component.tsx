@@ -55,13 +55,31 @@ export class WebsiteDesignMenuComponent {
                   : null
               }
               </div>
+              <label htmlFor="favicon-image">Favicon (ico, png)</label>
+              <input id="favicon-image" type="file" accept=".ico, .png" onChange={(event) => this.handleFileUploadChange.bind(this)(event, "faviconImage")} value={""}></input>
+              <div>
+              {
+                  this.styleSettings.faviconImage
+                  ? <div>
+                      <div>
+                      <img src={this.styleSettings?.faviconImage as string} style={{width: "32px", height: "32px", marginTop: "1rem", marginBottom: "1rem"}}></img>
+                      </div>
+                      <button onClick={(event) => this.handleDeleteFileClick.bind(this)(event, "faviconImage")}>Remove favicon</button>
+                    </div>
+                  : null
+              }
+              </div>
               <label htmlFor="display-name">Website display name</label>
               <input id="display-name" type="text" value={this.styleSettings.displayName} onInput={(event) => this.handlePropertyChange.bind(this)(event, "displayName")}></input>
               <label htmlFor="copyright-name">Copyright name</label>
               <input id="copyright-name" type="text" value={this.styleSettings.copyrightName} onInput={(event) => this.handlePropertyChange.bind(this)(event, "copyrightName")}></input>
+              <label htmlFor="tab-text">Browser tab text</label>
+              <input id="tab-text" type="text" value={this.styleSettings.browserTabText} onInput={(event) => this.handlePropertyChange.bind(this)(event, "browserTabText")}></input>
           </div>
       case "font":
         return <div>
+              <hr></hr>
+              <h4>Font</h4>
               {
                   !this.styleSettings.customFont
                   ? <div>
@@ -82,6 +100,8 @@ export class WebsiteDesignMenuComponent {
         </div>
       case "header":
         return <div>
+              <hr></hr>
+              <h4>Header</h4>
               <label htmlFor="header-background">Header background color</label>
               <input id="header-background" type="color" value={this.styleSettings.headerBackgroundColor} onInput={(event) => this.handlePropertyChange.bind(this)(event, "headerBackgroundColor")}></input>
               <label htmlFor="header-transparency">Opacity</label>
@@ -95,6 +115,8 @@ export class WebsiteDesignMenuComponent {
         </div>
       case "footer":
         return <div>
+              <hr></hr>
+              <h4>Footer</h4>
               <label htmlFor="footer-background">Background color</label>
               <input id="footer-background"type="color"  value={this.styleSettings.footerBackgroundColor} onInput={(event) => this.handlePropertyChange.bind(this)(event, "footerBackgroundColor")}></input>
               <label htmlFor="footer-font-color">Font color</label>
@@ -115,6 +137,8 @@ export class WebsiteDesignMenuComponent {
         </div>
       case "menu":
         return <div>
+              <hr></hr>
+              <h4>Menu</h4>
               <label htmlFor="enable-separate-menu-background-color">Separate menu colors</label>
                         <select id="enable-separate-menu-background-color" onInput={(event) => this.handlePropertyChange.bind(this)(event, "enableSeparateMenuBackgroundColor")}>
                             <option selected={this.styleSettings.enableSeparateMenuBackgroundColor === "true"} value="true">Yes</option>
@@ -130,11 +154,11 @@ export class WebsiteDesignMenuComponent {
                             </div>
                             : null
                         }
-                        <label htmlFor="close-menu">Close menu label</label>
-                        <input id="close-menu" type="text" value={this.styleSettings.closeMenuLabel} onInput={(event) => this.handlePropertyChange.bind(this)(event, "closeMenuLabel")}></input>
         </div>
       case "background":
         return <div>
+            <hr></hr>
+            <h4>Page background</h4>
             <label htmlFor="background">Background type</label>
             <select id="background" onInput={(event) => this.handlePropertyChange.bind(this)(event, "backgroundType")}>
                 <option selected={this.styleSettings.backgroundType === "COLOR"} value="COLOR">Solid color</option>
@@ -164,6 +188,8 @@ export class WebsiteDesignMenuComponent {
                 ? <div>
                     <label htmlFor="header-background">Background image (png, svg, jpg, gif)</label>
                     <input id="header-background" type="file" accept=".png, .svg, .jpg, .jpeg, .gif"  value={""} onChange={(event) => this.handleFileUploadChange.bind(this)(event, "backgroundImage")}></input>
+                    <label htmlFor="background-blur">Background blur</label>
+                    <input id="background-blur" type="range" min="0" max="10"  step="1" value={this.styleSettings.backgroundBlur} onInput={(event) => this.handlePropertyChange.bind(this)(event, "backgroundBlur")}></input>
                 </div>
                 : null
             }
@@ -173,6 +199,25 @@ export class WebsiteDesignMenuComponent {
                 : null
             }
       </div>
+      case "text-block":
+        return <div>
+              <hr></hr>
+              <h4>Page content</h4>
+              <label htmlFor="page-content-background">Background color</label>
+              <input id="page-content-background" type="color" value={this.styleSettings.pageContentBackgroundColor} onInput={(event) => this.handlePropertyChange.bind(this)(event, "pageContentBackgroundColor")}></input>
+              <label htmlFor="page-content-transparency">Opacity</label>
+              <input id="page-content-transparency" type="range" min="0" max="100" step="1" value={this.styleSettings.pageContentOpacity} onInput={(event) => this.handlePropertyChange.bind(this)(event, "pageContentOpacity")}></input>
+              <label htmlFor="page-content-font-color">Font color</label>
+              <input id="page-content-font-color" type="color" value={this.styleSettings.pageContentFontColor} onInput={(event) => this.handlePropertyChange.bind(this)(event, "pageContentFontColor")}></input>
+              <label htmlFor="top-margin">Top margin</label>
+              <input id="top-margin" type="range" min="0" max="10" step="1" value={this.styleSettings.pageContentMarginTop} onInput={(event) => this.handlePropertyChange.bind(this)(event, "pageContentMarginTop")}></input>
+              <label htmlFor="page-content-margin">Side margin</label>
+              <input id="page-content-margin" type="range" min="0" max="40" step="5" value={this.styleSettings.pageContentMarginSides} onInput={(event) => this.handlePropertyChange.bind(this)(event, "pageContentMarginSides")}></input>
+              <label htmlFor="bottom-margin">Bottom margin</label>
+              <input id="bottom-margin" type="range" min="0" max="10" step="1" value={this.styleSettings.pageContentMarginBottom} onInput={(event) => this.handlePropertyChange.bind(this)(event, "pageContentMarginBottom")}></input>
+              <label htmlFor="page-content-padding">Padding</label>
+              <input id="page-content-padding" type="range" min="0" max="5" step="0.5" value={this.styleSettings.pageContentPadding} onInput={(event) => this.handlePropertyChange.bind(this)(event, "pageContentPadding")}></input>
+        </div>
       default:
         return null;
     }

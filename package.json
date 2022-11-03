@@ -30,8 +30,10 @@
     "chance": "^1.1.9",
     "dexie": "^3.2.2",
     "downloadjs": "^1.4.7",
+    "escape-html": "^1.0.3",
     "hex-rgb": "^5.0.0",
-    "lodash.isequal": "^4.5.0"
+    "lodash.isequal": "^4.5.0",
+    "sortablejs": "^1.15.0"
   },
   "devDependencies": {
     "@types/jest": "^27.0.3",

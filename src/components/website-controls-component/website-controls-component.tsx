@@ -9,7 +9,7 @@ import { Component, h, Host, Prop } from '@stencil/core';
 export class WebsiteControlsComponent {
 
   @Prop() showPreviewSizeToggle: boolean = true;
-  @Prop() disabled: boolean = false;
+  @Prop() disabled: boolean;
   @Prop() saveChangesHandler: ()=> void;
   @Prop() undoChangesHandler: ()=> void;
   @Prop() togglePreviewSizeClick: (mobileView: boolean) => void;
@@ -19,7 +19,7 @@ export class WebsiteControlsComponent {
     return <Host>
         <div>
             <button disabled={this.disabled} onClick={this.saveChangesHandler}>Save changes</button>
-            <button disabled={this.disabled} onClick={this.undoChangesHandler}>Undo changes</button>
+            <button class="cancel" disabled={this.disabled} onClick={this.undoChangesHandler}>Undo changes</button>
         </div>
         <div>
             <button onClick={() => this.togglePreviewSizeClick(false)}>Desktop</button>
