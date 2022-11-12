@@ -44,13 +44,13 @@ export class MenuComponent {
         <div class="menu-icon-container">
           <svg onClick={this.handleMenuIconClick.bind(this)} height="45px" viewBox="0 0 32 32" class="menu-icon"><path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/></svg>
         </div>
-        <div onClick={() => this.handleRouteChange.bind(this)("")} class="logo hideable">
+        <div onClick={(event) => this.handleRouteChange.bind(this)(event, "")} class="logo hideable">
           BrowserPress
         </div>
         <ul class="hideable">
           <li>
             <p>Create a new website</p>
-            <button onClick={() => this.handleRouteChange.bind(this)("add-website")}>Add Website</button>
+            <button onClick={(event) => this.handleRouteChange.bind(this)(event, "add-website")}>Add Website</button>
           </li>
           {
             this.websites?.length > 0
@@ -69,19 +69,19 @@ export class MenuComponent {
             this.selectedWebsite 
             ? [<li>
               <p>Customise how your website looks</p>
-              <button onClick={() => this.handleRouteChange.bind(this)("design-website")}>Design Website</button>
+              <button onClick={(event) => this.handleRouteChange.bind(this)(event, "design-website")}>Design Website</button>
             </li>,
             <li>
               <p>Edit, add or delete your website pages</p>
-              <button  onClick={() => this.handleRouteChange.bind(this)("manage-website")}>Manage Pages</button>
+              <button  onClick={(event) => this.handleRouteChange.bind(this)(event, "manage-website")}>Manage Pages</button>
             </li>,
             <li>
               <p>Generate website files or save website</p>
-              <button  onClick={() => this.handleRouteChange.bind(this)("export-website")}>Export Website</button>
+              <button  onClick={(event) => this.handleRouteChange.bind(this)(event, "export-website")}>Export Website</button>
             </li>,
             <li>
               <p>Permanently delete website</p>
-              <button  onClick={() => this.handleRouteChange.bind(this)("delete-website")}>Delete Website</button>
+              <button  onClick={(event) => this.handleRouteChange.bind(this)(event, "delete-website")}>Delete Website</button>
             </li>]
             : null
           }
@@ -94,8 +94,10 @@ export class MenuComponent {
     console.log(this.hidden)
   }
 
-  handleRouteChange(route: string) {
+  handleRouteChange(event, route: string) {
+    event.preventDefault()
     if(route === "add-website" || route === "") {
+      console.log("clicked nothing")
       this.websiteSelectChange.emit("");
     }
     this.routeChange.emit(route);

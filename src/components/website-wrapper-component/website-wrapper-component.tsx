@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, Watch } from '@stencil/core';
-import { liveQuery } from 'dexie';
+import { liveQuery, Subscription } from 'dexie';
 import { db } from '../../database/db';
 import { Website } from '../../interfaces';
 
@@ -11,19 +11,14 @@ import { Website } from '../../interfaces';
 })
 export class WebsiteWrapperComponent {
 
+  /* Used to query websites from database */
+  @State() websites: Website[] = [];
+  
   @Prop() route: string;
   @Prop() selectedWebsite: string;
-
   @State() website: Website;
 
-  websitesObservable = liveQuery (
-    () => db.websites.get(this.selectedWebsite)
-  );
-
-  subscription = this.websitesObservable.subscribe({
-    next: this.nextHandler.bind(this),
-    error: error => console.error(error)
-  });
+  @State() subscription: Subscription;
 
   @Watch('selectedWebsite')
   onSelectedWebsiteChanged(newValue: string, oldValue: string) {
@@ -31,38 +26,28 @@ export class WebsiteWrapperComponent {
       if(this.subscription) {
         this.subscription.unsubscribe();
       }
-
-      this.websitesObservable = liveQuery (
+      const websitesObservable = liveQuery (
         () => db.websites.get(newValue)
       );
-    
-      this.subscription = this.websitesObservable.subscribe({
-        next: this.nextHandler.bind(this),
+      
+      // Subscribe
+      this.subscription = websitesObservable.subscribe({
+        next: result => this.website = result,
         error: error => console.error(error)
       });
     }
   }
 
-  @Watch('route')
-  onRouteChanged(newValue: string, oldValue: string) {
-    if(newValue !== oldValue) {
-      if(this.subscription) {
-        this.subscription.unsubscribe();
-      }
-
-      this.websitesObservable = liveQuery (
-        () => db.websites.get(this.selectedWebsite)
-      );
+  componentDidLoad() {
+    const websitesObservable = liveQuery (
+      () => db.websites.get(this.selectedWebsite)
+    );
     
-      this.subscription = this.websitesObservable.subscribe({
-        next: this.nextHandler.bind(this),
-        error: error => console.error(error)
-      });
-    }
-  }
-
-  nextHandler(result) {
-    this.website = result;
+    // Subscribe
+    this.subscription = websitesObservable.subscribe({
+      next: result => this.website = result,
+      error: error => console.error(error)
+    });
   }
 
   disconnectedCallback() {
@@ -73,24 +58,21 @@ export class WebsiteWrapperComponent {
 
   render() {
     if(this.website) {
-      let websiteContent;
-      switch(this.route) {
-        case "/design-website":
-          websiteContent = <designer-component website={this.website}></designer-component>;
-          break;
-        case "/manage-website":
-          websiteContent = <editor-component website={this.website}></editor-component>;
-          break;
-        default:
-          websiteContent = <div>An error occurred</div>;
-          break;
-      }
-      return websiteContent;
+      return this.getContent();
     }
     else {
       return <div>Website not found</div>;
     }
   }
 
-
+  getContent() {
+    switch(this.route) {
+      case "/design-website":
+        return <designer-component website={this.website}></designer-component>;
+      case "/manage-website":
+        return <editor-component key={this.route} website={this.website} pages={this.website.pages}></editor-component>;
+      default:
+        return <div>An error occurred</div>;
+    }
+  }
 }

@@ -7,6 +7,7 @@ import { Component, h } from '@stencil/core';
   scoped: true
 })
 export class DashboardComponent {
+  // for now, just some simple welcome text. Later, maybe some links to website projects
   render() {
     return <main>
     <h1>Welcome to BrowserPress</h1>
@@ -14,8 +15,6 @@ export class DashboardComponent {
     <p>You can use BrowserPress to quickly and easily create simple websites right here in your browser, without needing to install any software and at no cost.</p>
     <h2>Privacy</h2>
     <p>This is a front-end only web app, meaning that all data stays in your browser. No data is shared with any backend, and the app doesn't use any tracking cookies.</p>
-    <h2>What is the business model?</h2>
-    <p>When you download your website files, you'll see an advert for a hosting provider who can help you host your website. The hosting provider pays us some money to show the ad. That's it.</p>
     <h2>How it works</h2>
     <ul>
         <li>Create a website</li>

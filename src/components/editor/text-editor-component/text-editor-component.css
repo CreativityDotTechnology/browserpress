@@ -1,0 +1,13 @@
+:host {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #e5e5e5;
+  max-height: 750px;
+  box-sizing: border-box;
+}
+
+#quill-container {
+  max-height: 90%;
+  box-sizing: border-box;
+}

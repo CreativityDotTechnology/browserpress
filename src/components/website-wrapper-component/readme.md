@@ -1,26 +1,32 @@
-# my-component
+# website-wrapper-component
 
 
 
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property          | Attribute          | Description | Type     | Default     |
+| ----------------- | ------------------ | ----------- | -------- | ----------- |
+| `route`           | `route`            |             | `string` | `undefined` |
+| `selectedWebsite` | `selected-website` |             | `string` | `undefined` |
+
+
 ## Dependencies
+
+### Used by
+
+ - [app-component](../app-component)
 
 ### Depends on
 
-- [menu-component](../menu-component)
-- [dashboard-component](../dashboard-component)
-- [website-wrapper-component](../website-wrapper-component)
-- [add-website-component](../add-website-component)
+- [designer-component](../designer-component)
+- [editor-component](../editor-component)
 
 ### Graph
 ```mermaid
 graph TD;
-  app-component --> menu-component
-  app-component --> dashboard-component
-  app-component --> website-wrapper-component
-  app-component --> add-website-component
   website-wrapper-component --> designer-component
   website-wrapper-component --> editor-component
   designer-component --> website-controls-component
@@ -30,7 +36,8 @@ graph TD;
   editor-component --> website-content-management-component
   editor-component --> website-preview-component
   website-content-management-component --> page-content-management-component
-  style app-component fill:#f9f,stroke:#333,stroke-width:4px
+  app-component --> website-wrapper-component
+  style website-wrapper-component fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

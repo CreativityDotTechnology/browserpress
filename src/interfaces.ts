@@ -20,24 +20,24 @@ export interface PageElement {
     id: string;
     type: PageElementType;
     // Settings if banner
-    bannerBackgroundImage: null  | string | ArrayBuffer;
-    bannerMobileBackgroundImage: null  | string | ArrayBuffer;
-    bannerText: string;
-    bannerTextFontColor: string;
-    bannerTextBackgroundColor: string;
-    bannerTextBackgroundOpacity: string;
-    bannerTextPosition: string;
-    bannerTextAlign: string;
-    bannerHeight: string;
-    bannerTextWidth: string;
+    bannerBackgroundImage?: null  | string | ArrayBuffer;
+    bannerMobileBackgroundImage?: null  | string | ArrayBuffer;
+    bannerText?: string;
+    bannerTextFontColor?: string;
+    bannerTextBackgroundColor?: string;
+    bannerTextBackgroundOpacity?: string;
+    bannerTextPosition?: string;
+    bannerTextAlign?: string;
+    bannerHeight?: string;
+    bannerTextWidth?: string;
     // Settings if text 
-    textHTML: string;
+    textHTML?: string;
     // Settings if text 
-    articles: Article[];
+    articles?: Article[];
     // Settings if item grid
-    itemGridTitle: string;
-    itemGridCategories: ItemGridCategory[]
-    itemGridItems: Item[];
+    itemGridTitle?: string;
+    itemGridCategories?: ItemGridCategory[]
+    itemGridItems?: Item[];
 }
 
 export interface ItemGridCategory {

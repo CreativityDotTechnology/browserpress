@@ -1,6 +1,6 @@
 import { Component, h, Prop, State } from '@stencil/core';
-import { StyleConfigSettings, Font } from '../../interfaces';
-import {fonts} from '../../constants/fonts';
+import { StyleConfigSettings, Font } from '../../../../interfaces';
+import {fonts} from '../../../../constants/fonts';
 
 
 @Component({

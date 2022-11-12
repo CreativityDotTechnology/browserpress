@@ -11,7 +11,7 @@
 }
 
 label {
-  display: inline;
+  display: block;
   font-size: 0.8rem;
   width: 100%;
   max-width: 450px;
@@ -50,9 +50,16 @@ button {
 
 button.cancel {
   background-color: white;
-  border: 1px solid rgb(255, 75, 75);
-  color: rgb(255, 75, 75);
+  border: 1px solid #be0000;
+  color: #be0000;
 }
+
+button.cancel:hover {
+  border-color: white;
+  background-color: #be0000;
+  color: white;
+}
+
 
 button:disabled {
   color: gray;

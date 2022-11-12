@@ -1,11 +1,11 @@
 import { Component, h, Prop, State, Watch } from '@stencil/core';
-import { StateUpdateType, StyleConfigSettings, Website } from '../../interfaces';
-import {initialSettings} from '../../constants/configSettings';
-import { renderHTMLWrapper } from '../../services/renderHTMLWrapper';
-import { renderDummyContent } from '../../services/renderDummyContent';
-import { renderDummyMenuContent } from '../../services/renderDummyMenuContent';
+import { StateUpdateType, StyleConfigSettings, Website } from '../../../interfaces';
+import {initialSettings} from '../../../constants/configSettings';
+import { renderHTMLWrapper } from '../../../services/renderHTMLWrapper';
+import { renderDummyContent } from '../../../services/renderDummyContent';
+import { renderDummyMenuContent } from '../../../services/renderDummyMenuContent';
 import isEqual from 'lodash.isequal';
-import {dbUpdate} from '../../database/dbUpdate';
+import {dbUpdate} from '../../../database/dbUpdate';
 
 @Component({
   tag: 'designer-component',
@@ -19,7 +19,9 @@ export class DesignerComponent {
   @State() initial = initialSettings;
   @State() style: StyleConfigSettings = initialSettings;
   @State() mobileView: boolean = false;
+  @State() contentView: string = "preview";
 
+  // Sets the initial and current style on website change
   @Watch('website')
   onSelectedWebsiteChanged(newValue: Website, _oldValue: Website) {
     if(newValue.styleConfig) {
@@ -32,6 +34,7 @@ export class DesignerComponent {
     }
   }
 
+  // called only on initial load => Sets the initial and current style on website change
   componentWillLoad() {
     if(this.website && this.website.styleConfig) {
       this.initial = this.website.styleConfig;
@@ -59,9 +62,19 @@ export class DesignerComponent {
         </website-controls-component>
         <div class="website-design-content">
           <website-design-menu-component styleSettings={this.style} updateStyleSettings={this.handleStyleUpdate.bind(this)}></website-design-menu-component>
-          <website-preview-component html={iframeSrcDoc} mobileView={this.mobileView}></website-preview-component>
+          {this.renderContentView.bind(this)(iframeSrcDoc)}
         </div>
     </div>;
+  }
+
+  // renders the design preview
+  renderContentView(iframeSrcDoc: string) {
+    switch(this.contentView) {
+      case "preview":
+        return <website-preview-component html={iframeSrcDoc} mobileView={this.mobileView}></website-preview-component>
+      default:
+        return <div>Something went wrong...</div>
+    }
   }
 
   handleSaveChanges() {
@@ -69,7 +82,9 @@ export class DesignerComponent {
   }
 
   handleUndoChanges() {
-    this.style = this.initial;
+    if(window.confirm("You are about to undo all changes that you have made. Are you sure you want to proceed?")) {
+      this.style = this.initial;
+    }
   }
 
   previewToggleHandler(mobileView: boolean) {

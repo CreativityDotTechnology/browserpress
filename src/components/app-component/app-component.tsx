@@ -1,4 +1,5 @@
 import { Component, h, Listen, State } from '@stencil/core';
+import { Website } from '../../interfaces';
 
 @Component({
   tag: 'app-component',
@@ -15,6 +16,8 @@ export class AppComponent {
     this.route = "/" + event.detail;
   }
 
+  @State() websites: Website[] = [];
+
   /* Selected website */
 
   @State() selectedWebsite: string;
@@ -24,7 +27,7 @@ export class AppComponent {
   @Listen('websiteSelectChange')
   websiteSelectChangeHandler(event: CustomEvent<string>) {
     this.selectedWebsite = event.detail;
-    if(this.selectedWebsite) {
+    if(this.selectedWebsite && this.selectedWebsite !== "") {
       this.route = "/design-website";
     }
     else {
@@ -45,24 +48,24 @@ export class AppComponent {
 
     switch(this.route) {
       case "/":
+        // Show welcome page
         mainContent = <dashboard-component></dashboard-component>;
         break;
       case "/design-website":
-        mainContent = <website-wrapper-component route={this.route} selectedWebsite={this.selectedWebsite}></website-wrapper-component>;
-        break;
+        // Show designer tool after fetching website details
+        mainContent = <website-wrapper-component key={this.route} route={this.route} selectedWebsite={this.selectedWebsite}></website-wrapper-component>;
       case "/manage-website":
-        mainContent = <website-wrapper-component route={this.route} selectedWebsite={this.selectedWebsite}></website-wrapper-component>;
+        // Show content editor tool after fetching website details
+        mainContent = <website-wrapper-component key={this.selectedWebsite} route={this.route} selectedWebsite={this.selectedWebsite}></website-wrapper-component>;
         break;
       case "/add-website":
+        // Show a page for adding a new website
         mainContent = <add-website-component></add-website-component>;
         break;
       default:
         mainContent = <div>An error occurred</div>;
         break;
     }
-
-    
-
     return mainContent;
   }
 }

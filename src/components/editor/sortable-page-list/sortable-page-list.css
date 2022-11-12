@@ -1,29 +1,32 @@
 :host {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  display: block;
+  flex: 1;
+  max-width: 300px;
+  min-width: 300px;
   padding: 0.5rem;
   border: 1px solid #e5e5e5;
-  margin-bottom: 1rem;
+  margin-right: 1rem;
+  box-sizing: border-box;
+  padding-bottom: 1rem;
+  max-height: 750px;
+  overflow-y: scroll;
 }
 
 button {
   border: none;
   background-color: black;
-  border: 1px solid black;
+  border: 1px solid #000000;
   color: white;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  margin: 0.5rem;
+  min-width: 50px;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 button.cancel {
   background-color: white;
-  border: 1px solid #be0000;
-  color: #be0000;
+  border: 1px solid rgb(255, 75, 75);
+  color: rgb(255, 75, 75);
 }
 
 button:disabled {
@@ -42,11 +45,4 @@ button:disabled:hover {
   cursor: not-allowed;
   color: gray;
 }
-
-button.cancel:hover {
-  border-color: white;
-  background-color: #be0000;
-  color: white;
-}
-
 

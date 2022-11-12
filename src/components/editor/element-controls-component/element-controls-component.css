@@ -1,0 +1,104 @@
+:host {
+  display: block;
+  border: 1px solid black;
+  margin-bottom: 0.5rem;
+}
+
+:host(:hover) {
+  cursor: move;
+}
+
+div.title-container {
+  width: 100%;
+  min-height: 40px;
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  box-sizing: border-box;
+  color: black;
+  font-size: 0.9rem;
+}
+
+div.title-container.selected {
+  background-color: #871F78;
+  color: white;
+}
+
+div.title-container.selected svg {
+  fill: white;
+}
+
+div.title-container svg:hover {
+  fill: black;
+  cursor: pointer;
+}
+
+div.element-content-container {
+ background: white;
+ padding: 0.5rem;
+}
+
+label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+select {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border: 1px solid black;
+  width: 100%;
+}
+
+input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input[type="file"] {
+  color: #d9d9d9;
+}
+
+input[type="text"] {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  border: 1px solid black;
+}
+
+button {
+  border: none;
+  background-color: black;
+  border: 1px solid black;
+  color: white;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-top: 1rem;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: white;
+  color: black;
+}
+
+button.cancel {
+  background-color: white;
+  border: 1px solid #be0000;
+  color: #be0000;
+}
+
+button.cancel:hover {
+  border-color: white;
+  background-color: #be0000;
+  color: white;
+}

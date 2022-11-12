@@ -17,19 +17,30 @@ export namespace Components {
         "website": Website;
     }
     interface EditorComponent {
+        "pages": Page[];
         "website": Website;
+    }
+    interface ElementControlsComponent {
+        "contentView": any;
+        "element": PageElement;
+        "expandedElement": string;
+        "pageId": string;
     }
     interface MenuComponent {
         "selectedWebsite": string;
     }
     interface PageContentManagementComponent {
+        "contentView": any;
         "page": Page;
         "position": number;
-        "updatePage": (newElements: PageElement[]) => void;
     }
-    interface WebsiteContentManagementComponent {
+    interface SortablePageList {
+        "contentView": any;
         "pages": Page[];
-        "updatePages": (newPages: Page[]) => void;
+    }
+    interface TextEditorComponent {
+        "element": PageElement;
+        "pageId": string;
     }
     interface WebsiteControlsComponent {
         "disabled": boolean;
@@ -55,9 +66,25 @@ export interface AddWebsiteComponentCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLAddWebsiteComponentElement;
 }
+export interface ElementControlsComponentCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLElementControlsComponentElement;
+}
 export interface MenuComponentCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMenuComponentElement;
+}
+export interface PageContentManagementComponentCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLPageContentManagementComponentElement;
+}
+export interface SortablePageListCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSortablePageListElement;
+}
+export interface TextEditorComponentCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLTextEditorComponentElement;
 }
 declare global {
     interface HTMLAddWebsiteComponentElement extends Components.AddWebsiteComponent, HTMLStencilElement {
@@ -90,6 +117,12 @@ declare global {
         prototype: HTMLEditorComponentElement;
         new (): HTMLEditorComponentElement;
     };
+    interface HTMLElementControlsComponentElement extends Components.ElementControlsComponent, HTMLStencilElement {
+    }
+    var HTMLElementControlsComponentElement: {
+        prototype: HTMLElementControlsComponentElement;
+        new (): HTMLElementControlsComponentElement;
+    };
     interface HTMLMenuComponentElement extends Components.MenuComponent, HTMLStencilElement {
     }
     var HTMLMenuComponentElement: {
@@ -102,11 +135,17 @@ declare global {
         prototype: HTMLPageContentManagementComponentElement;
         new (): HTMLPageContentManagementComponentElement;
     };
-    interface HTMLWebsiteContentManagementComponentElement extends Components.WebsiteContentManagementComponent, HTMLStencilElement {
+    interface HTMLSortablePageListElement extends Components.SortablePageList, HTMLStencilElement {
     }
-    var HTMLWebsiteContentManagementComponentElement: {
-        prototype: HTMLWebsiteContentManagementComponentElement;
-        new (): HTMLWebsiteContentManagementComponentElement;
+    var HTMLSortablePageListElement: {
+        prototype: HTMLSortablePageListElement;
+        new (): HTMLSortablePageListElement;
+    };
+    interface HTMLTextEditorComponentElement extends Components.TextEditorComponent, HTMLStencilElement {
+    }
+    var HTMLTextEditorComponentElement: {
+        prototype: HTMLTextEditorComponentElement;
+        new (): HTMLTextEditorComponentElement;
     };
     interface HTMLWebsiteControlsComponentElement extends Components.WebsiteControlsComponent, HTMLStencilElement {
     }
@@ -138,9 +177,11 @@ declare global {
         "dashboard-component": HTMLDashboardComponentElement;
         "designer-component": HTMLDesignerComponentElement;
         "editor-component": HTMLEditorComponentElement;
+        "element-controls-component": HTMLElementControlsComponentElement;
         "menu-component": HTMLMenuComponentElement;
         "page-content-management-component": HTMLPageContentManagementComponentElement;
-        "website-content-management-component": HTMLWebsiteContentManagementComponentElement;
+        "sortable-page-list": HTMLSortablePageListElement;
+        "text-editor-component": HTMLTextEditorComponentElement;
         "website-controls-component": HTMLWebsiteControlsComponentElement;
         "website-design-menu-component": HTMLWebsiteDesignMenuComponentElement;
         "website-preview-component": HTMLWebsitePreviewComponentElement;
@@ -159,7 +200,17 @@ declare namespace LocalJSX {
         "website"?: Website;
     }
     interface EditorComponent {
+        "pages"?: Page[];
         "website"?: Website;
+    }
+    interface ElementControlsComponent {
+        "contentView"?: any;
+        "element"?: PageElement;
+        "expandedElement"?: string;
+        "onExpandElement"?: (event: ElementControlsComponentCustomEvent<string>) => void;
+        "onUpdateContentView"?: (event: ElementControlsComponentCustomEvent<any>) => void;
+        "onUpdateElementInPage"?: (event: ElementControlsComponentCustomEvent<any>) => void;
+        "pageId"?: string;
     }
     interface MenuComponent {
         "onRouteChange"?: (event: MenuComponentCustomEvent<string>) => void;
@@ -167,13 +218,24 @@ declare namespace LocalJSX {
         "selectedWebsite"?: string;
     }
     interface PageContentManagementComponent {
+        "contentView"?: any;
+        "onDeletePage"?: (event: PageContentManagementComponentCustomEvent<any>) => void;
+        "onShowPagePreview"?: (event: PageContentManagementComponentCustomEvent<string>) => void;
+        "onUpdateContentView"?: (event: PageContentManagementComponentCustomEvent<any>) => void;
+        "onUpdatePage"?: (event: PageContentManagementComponentCustomEvent<{pageId: string, newPage: Page}>) => void;
         "page"?: Page;
         "position"?: number;
-        "updatePage"?: (newElements: PageElement[]) => void;
     }
-    interface WebsiteContentManagementComponent {
+    interface SortablePageList {
+        "contentView"?: any;
+        "onUpdatePage"?: (event: SortablePageListCustomEvent<{pageId: string, newPage: Page}>) => void;
+        "onUpdatePages"?: (event: SortablePageListCustomEvent<any>) => void;
         "pages"?: Page[];
-        "updatePages"?: (newPages: Page[]) => void;
+    }
+    interface TextEditorComponent {
+        "element"?: PageElement;
+        "onUpdateElementHtml"?: (event: TextEditorComponentCustomEvent<any>) => void;
+        "pageId"?: string;
     }
     interface WebsiteControlsComponent {
         "disabled"?: boolean;
@@ -200,9 +262,11 @@ declare namespace LocalJSX {
         "dashboard-component": DashboardComponent;
         "designer-component": DesignerComponent;
         "editor-component": EditorComponent;
+        "element-controls-component": ElementControlsComponent;
         "menu-component": MenuComponent;
         "page-content-management-component": PageContentManagementComponent;
-        "website-content-management-component": WebsiteContentManagementComponent;
+        "sortable-page-list": SortablePageList;
+        "text-editor-component": TextEditorComponent;
         "website-controls-component": WebsiteControlsComponent;
         "website-design-menu-component": WebsiteDesignMenuComponent;
         "website-preview-component": WebsitePreviewComponent;
@@ -218,9 +282,11 @@ declare module "@stencil/core" {
             "dashboard-component": LocalJSX.DashboardComponent & JSXBase.HTMLAttributes<HTMLDashboardComponentElement>;
             "designer-component": LocalJSX.DesignerComponent & JSXBase.HTMLAttributes<HTMLDesignerComponentElement>;
             "editor-component": LocalJSX.EditorComponent & JSXBase.HTMLAttributes<HTMLEditorComponentElement>;
+            "element-controls-component": LocalJSX.ElementControlsComponent & JSXBase.HTMLAttributes<HTMLElementControlsComponentElement>;
             "menu-component": LocalJSX.MenuComponent & JSXBase.HTMLAttributes<HTMLMenuComponentElement>;
             "page-content-management-component": LocalJSX.PageContentManagementComponent & JSXBase.HTMLAttributes<HTMLPageContentManagementComponentElement>;
-            "website-content-management-component": LocalJSX.WebsiteContentManagementComponent & JSXBase.HTMLAttributes<HTMLWebsiteContentManagementComponentElement>;
+            "sortable-page-list": LocalJSX.SortablePageList & JSXBase.HTMLAttributes<HTMLSortablePageListElement>;
+            "text-editor-component": LocalJSX.TextEditorComponent & JSXBase.HTMLAttributes<HTMLTextEditorComponentElement>;
             "website-controls-component": LocalJSX.WebsiteControlsComponent & JSXBase.HTMLAttributes<HTMLWebsiteControlsComponentElement>;
             "website-design-menu-component": LocalJSX.WebsiteDesignMenuComponent & JSXBase.HTMLAttributes<HTMLWebsiteDesignMenuComponentElement>;
             "website-preview-component": LocalJSX.WebsitePreviewComponent & JSXBase.HTMLAttributes<HTMLWebsitePreviewComponentElement>;

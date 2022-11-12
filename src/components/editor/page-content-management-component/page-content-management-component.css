@@ -1,0 +1,163 @@
+:host {
+  display: block;
+  margin: 0.5rem;
+  border: 1px solid black;
+  box-sizing: border-box;
+  position: relative;
+}
+
+:host(:hover) {
+  cursor: move;
+}
+
+.page-tools {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: #F8F8F8;
+}
+
+.page-name {
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background-color: #05014a;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.page-name.previewing {
+  background-color: #871F78;
+}
+
+.page-details {
+  width: 100%;
+  display: flex;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  color: rgb(70, 70, 70);
+  font-size: 0.9rem;
+}
+
+.page-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.page-content {
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  padding-bottom: 0.5rem;
+  background-color: linear-gradient(to bottom, #d9d9d9, white);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.url-slug {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+label {
+  display: block;
+  font-size: 0.8rem;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 450px;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+input {
+  width: 100%;
+  max-width: 450px;
+  box-sizing: border-box;
+}
+
+select {
+  width: 100%;
+  max-width: 450px;
+  box-sizing: border-box;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  border: 1px solid black;
+}
+
+input[type="text"] {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  border: 1px solid black;
+}
+
+button {
+  border: none;
+  background-color: white;
+  border: 1px solid black;
+  color: black;
+  min-width: 50px;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+button.cancel {
+  background-color: white;
+  border: 1px solid #be0000;
+  color: #be0000;
+}
+button.cancel:hover {
+  border-color: white;
+  background-color: #be0000;
+  color: white;
+}
+
+button:disabled {
+  color: gray;
+  border: 1px solid gray;
+  background-color: white;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: white;
+  color: black;
+}
+
+button:disabled:hover {
+  cursor: not-allowed;
+  color: gray;
+}
+
+.expand-container {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.expand-container:hover {
+  background-color: white;
+  fill: black
+}
+
+.expand-container:hover {
+  color: black;
+  cursor: pointer;
+}
+
+
+

@@ -4,12 +4,40 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
     <title>BrowserPress - create websites in your browser</title>
+    <script>console.error = function() {}</script>
     <link rel="icon" type="image/x-icon" href="assets/browserpress.ico">
     <script type="module" src="/build/browserpress.esm.js"></script>
     <script nomodule src="/build/browserpress.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <style>
+      .ql-editor p {
+        font-size: 1rem !important;
+        line-height: 1.75rem !important;
+        margin-bottom: 0.5rem !important;
+        margin-top: 0.5rem !important;
+      }
+
+      .ql-editor ul {
+        font-size: 1rem !important;
+        line-height: 1.75rem !important;
+        margin-bottom: 0.5rem !important;
+        margin-top: 0.5rem !important;
+      }
+
+      .ql-editor h1 {
+        margin-top: 0.67em !important;
+        margin-bottom: 0.67em !important;
+      }
+
+      .ql-editor h2 {
+        margin-top: 0.5em !important;
+        margin-bottom: 0.5em !important;
+      }
+
+    </style>
   </head>
   <body>
     <app-component></app-component>
