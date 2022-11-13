@@ -140,6 +140,8 @@ export class EditorComponent {
         return <website-preview-component html={this.renderContent.bind(this)(previewPageId)} mobileView={this.mobileView}></website-preview-component>
       case "text-editor":
         return <text-editor-component pageId={this.contentView.pageId} element={this.getElement(this.contentView.pageId, this.contentView.elementId)}></text-editor-component>
+      case "item-grid-editor":
+        return <item-grid-editor-component pageId={this.contentView.pageId} element={this.getElement(this.contentView.pageId, this.contentView.elementId)}></item-grid-editor-component>
       default:
         return <div>Something went wrong...</div>
     }

@@ -98,6 +98,15 @@ export class ElementControlsComponent {
             }
             
         </div>
+      case PageElementType.ITEM_GRID:
+        return <div class="element-content-container">
+            {
+              this.contentView.view === "preview"
+              ? <button onClick={this.handleShowItemsEditorClick.bind(this)}>Show editor</button>
+              : <button onClick={this.handleCloseItemsEditorClick.bind(this)} class="cancel">Close editor</button>
+            }
+            
+        </div>
       default:
         return <div class="element-content-container">Something went wrong...</div>
     }
@@ -147,6 +156,26 @@ export class ElementControlsComponent {
   }
 
   handleCloseEditorClick(event) {
+    event.preventDefault();
+    this.updateContentView.emit({
+      view: "preview",
+      pageId: "",
+      elementId: "",
+      expandedPage: this.pageId
+    });
+  }
+
+  handleShowItemsEditorClick(event) {
+    event.preventDefault();
+    this.updateContentView.emit({
+      view: "item-grid-editor",
+      pageId: this.pageId,
+      elementId: this.element.id,
+      expandedPage: this.pageId
+    });
+  }
+
+  handleCloseItemsEditorClick(event) {
     event.preventDefault();
     this.updateContentView.emit({
       view: "preview",

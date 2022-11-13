@@ -26,6 +26,10 @@ export namespace Components {
         "expandedElement": string;
         "pageId": string;
     }
+    interface ItemGridEditorComponent {
+        "element": PageElement;
+        "pageId": string;
+    }
     interface MenuComponent {
         "selectedWebsite": string;
     }
@@ -123,6 +127,12 @@ declare global {
         prototype: HTMLElementControlsComponentElement;
         new (): HTMLElementControlsComponentElement;
     };
+    interface HTMLItemGridEditorComponentElement extends Components.ItemGridEditorComponent, HTMLStencilElement {
+    }
+    var HTMLItemGridEditorComponentElement: {
+        prototype: HTMLItemGridEditorComponentElement;
+        new (): HTMLItemGridEditorComponentElement;
+    };
     interface HTMLMenuComponentElement extends Components.MenuComponent, HTMLStencilElement {
     }
     var HTMLMenuComponentElement: {
@@ -178,6 +188,7 @@ declare global {
         "designer-component": HTMLDesignerComponentElement;
         "editor-component": HTMLEditorComponentElement;
         "element-controls-component": HTMLElementControlsComponentElement;
+        "item-grid-editor-component": HTMLItemGridEditorComponentElement;
         "menu-component": HTMLMenuComponentElement;
         "page-content-management-component": HTMLPageContentManagementComponentElement;
         "sortable-page-list": HTMLSortablePageListElement;
@@ -210,6 +221,10 @@ declare namespace LocalJSX {
         "onExpandElement"?: (event: ElementControlsComponentCustomEvent<string>) => void;
         "onUpdateContentView"?: (event: ElementControlsComponentCustomEvent<any>) => void;
         "onUpdateElementInPage"?: (event: ElementControlsComponentCustomEvent<any>) => void;
+        "pageId"?: string;
+    }
+    interface ItemGridEditorComponent {
+        "element"?: PageElement;
         "pageId"?: string;
     }
     interface MenuComponent {
@@ -263,6 +278,7 @@ declare namespace LocalJSX {
         "designer-component": DesignerComponent;
         "editor-component": EditorComponent;
         "element-controls-component": ElementControlsComponent;
+        "item-grid-editor-component": ItemGridEditorComponent;
         "menu-component": MenuComponent;
         "page-content-management-component": PageContentManagementComponent;
         "sortable-page-list": SortablePageList;
@@ -283,6 +299,7 @@ declare module "@stencil/core" {
             "designer-component": LocalJSX.DesignerComponent & JSXBase.HTMLAttributes<HTMLDesignerComponentElement>;
             "editor-component": LocalJSX.EditorComponent & JSXBase.HTMLAttributes<HTMLEditorComponentElement>;
             "element-controls-component": LocalJSX.ElementControlsComponent & JSXBase.HTMLAttributes<HTMLElementControlsComponentElement>;
+            "item-grid-editor-component": LocalJSX.ItemGridEditorComponent & JSXBase.HTMLAttributes<HTMLItemGridEditorComponentElement>;
             "menu-component": LocalJSX.MenuComponent & JSXBase.HTMLAttributes<HTMLMenuComponentElement>;
             "page-content-management-component": LocalJSX.PageContentManagementComponent & JSXBase.HTMLAttributes<HTMLPageContentManagementComponentElement>;
             "sortable-page-list": LocalJSX.SortablePageList & JSXBase.HTMLAttributes<HTMLSortablePageListElement>;
